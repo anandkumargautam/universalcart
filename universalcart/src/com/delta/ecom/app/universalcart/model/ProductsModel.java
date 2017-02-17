@@ -1,5 +1,8 @@
 package com.delta.ecom.app.universalcart.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 
 import com.delta.ecom.app.universalcart.dto.ProductsDTO;
@@ -30,6 +33,30 @@ public class ProductsModel extends GenericModel<ProductsEntity, ProductsDTO> {
 
 	public void save(Session session, ProductsDTO dto) {
 		_save(session, dto);
+	}
+
+	/**
+	 * Select all items using email id
+	 * @param session
+	 * @param email
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<ProductsDTO> getByEmail(Session session, String email) {
+		String query = "SELECT * FROM products WHERE email = :email;";
+
+		List<ProductsEntity> row = session.createSQLQuery(query).addEntity(
+				ProductsEntity.class).setParameter("email", email).list();
+
+		List<ProductsDTO> productsDTOList = new ArrayList<ProductsDTO>();
+		if (null != row && !row.isEmpty()) {
+			for (ProductsEntity entity : row) {
+				if (null != entity) {
+					productsDTOList.add(toDTO(entity));
+				}
+			}
+		}
+		return productsDTOList;
 	}
 
 }

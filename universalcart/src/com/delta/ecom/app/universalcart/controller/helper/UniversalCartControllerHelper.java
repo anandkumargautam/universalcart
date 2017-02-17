@@ -23,4 +23,9 @@ public class UniversalCartControllerHelper {
 		public int type;
 		public String hotelDO;
 	}
+	
+	public static class Product {
+		public int type;
+		public String data;
+	}
 }
