@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="resourcerepo" extends="struts-default,json-default">
+		<action name="testaction" class="com.resourcerepo.actions.TestAction">
+			<result name="success">/htmls/test/success.jsp</result>
+			<result name="error">/htmls/test/error.jsp</result>
+		</action>
+
+		<!-- <action name="authenticationaction" class="com.resourcerepo.actions.AuthenticationAction">
+			<result name="success">/htmls/admin.jsp</result>
+			<result name="error">/htmls/test/error.jsp</result>
+		</action>
+		
+		<action name="getsubcategorybycataction" class="com.resourcerepo.actions.SubCategoryJSONAction"
+			method="listByCatId">
+			<param name="contentType">application/json</param>
+			<result type="json"></result>
+		</action> -->
+
+	</package>
+
+</struts>
