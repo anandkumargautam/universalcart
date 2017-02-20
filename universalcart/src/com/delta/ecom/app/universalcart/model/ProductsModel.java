@@ -43,7 +43,7 @@ public class ProductsModel extends GenericModel<ProductsEntity, ProductsDTO> {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<ProductsDTO> getByEmail(Session session, String email) {
-		String query = "SELECT * FROM products WHERE email = :email;";
+		String query = "SELECT * FROM products WHERE email = :email";
 
 		List<ProductsEntity> row = session.createSQLQuery(query).addEntity(
 				ProductsEntity.class).setParameter("email", email).list();

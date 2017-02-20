@@ -17,18 +17,18 @@
 		<hr>
 
 		<div>
-			<s:form action="testaction">
-				<s:textfield name="message" label="Message" />
+			<s:form action="managecart">
+				<s:textfield name="passenger.emailId" label="Message" />
 				<s:submit value="Submit" />
 			</s:form>
 			<br>
-			<s:form action="authenticationaction">
+			<!--<s:form action="authenticationaction">
 				<s:textfield name="authentication.userName" label="Username" />
 				<s:password name="authentication.password" label="Password" />
 				<s:radio label="admin" name="authencation.isAdmin" list="true" />
 				<s:submit value="Submit" />
 			</s:form>
-		</div>
+		--></div>
 	</center>
 </body>
 </html>

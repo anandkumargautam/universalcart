@@ -11,11 +11,7 @@ public class TestAction extends ActionSupport {
 
 	@Override
 	public String execute() {
-		if (null == message || message.equalsIgnoreCase("error")) {
-
-			return ERROR;
-		} else
-			return SUCCESS;
+		return message;
 	}
 
 	public String getMessage() {

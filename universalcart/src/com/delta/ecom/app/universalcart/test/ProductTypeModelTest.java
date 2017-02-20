@@ -1,5 +1,6 @@
 package com.delta.ecom.app.universalcart.test;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -42,5 +43,10 @@ public class ProductTypeModelTest {
 
 		// Assert
 		Assert.assertTrue(productTypes.size() > 0);
+	}
+	
+	@Test
+	public void testTime(){
+		System.out.println(new Timestamp(System.currentTimeMillis()));
 	}
 }

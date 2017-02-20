@@ -4,7 +4,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="resourcerepo" extends="struts-default,json-default">
-		<action name="testaction" class="com.resourcerepo.actions.TestAction">
+		<action name="managecart" class="com.delta.ecom.universalcartweb.action.ManageCartAction">
 			<result name="success">/htmls/test/success.jsp</result>
 			<result name="error">/htmls/test/error.jsp</result>
 		</action>
