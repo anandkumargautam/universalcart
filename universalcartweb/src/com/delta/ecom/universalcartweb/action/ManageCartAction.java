@@ -1,12 +1,9 @@
 package com.delta.ecom.universalcartweb.action;
 
 import org.apache.log4j.Level;
-import org.hibernate.Session;
 
 import com.delta.commons.util.DeltaLogger;
 import com.delta.commons.util.StringUtils;
-import com.delta.ecom.app.universalcart.hibernate.HibernateUtil;
-import com.delta.ecom.app.universalcart.model.ProductsModel;
 import com.delta.ecom.universalcartweb.constant.UniversalCartConstants;
 import com.delta.ecom.universalcartweb.dataobject.ErrorDO;
 import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
