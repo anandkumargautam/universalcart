@@ -7,14 +7,13 @@
 	
 		<action name="managecart"
 			class="com.delta.ecom.universalcartweb.action.ManageCartAction">
-			<result name="success">/htmls/test/success.jsp</result>
+			<result name="success">/htmls/managecart.jsp</result>
 			<result name="error">/htmls/test/error.jsp</result>
 		</action>
 
 		<action name="getallitems"
 			class="com.delta.ecom.universalcartweb.action.ManageCartJSONAction"
 			method="getAllItems">
-			<param name="contentType">application/json</param>
 			<result type="json"></result>
 		</action>
 

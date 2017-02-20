@@ -10,25 +10,16 @@
 
 </head>
 <body>
-	<center>
-		<h2>Test Page</h2>
+<center>
+<h2>Test Page</h2>
 
-		<br>
-		<hr>
+<br>
+<hr>
 
-		<div>
-			<s:form action="managecart">
-				<s:textfield name="passenger.emailId" label="Message" />
-				<s:submit value="Submit" />
-			</s:form>
-			<br>
-			<!--<s:form action="authenticationaction">
-				<s:textfield name="authentication.userName" label="Username" />
-				<s:password name="authentication.password" label="Password" />
-				<s:radio label="admin" name="authencation.isAdmin" list="true" />
-				<s:submit value="Submit" />
-			</s:form>
-		--></div>
-	</center>
+<div><s:form action="managecart">
+	<s:textfield name="passenger.emailId" size="20"></s:textfield>
+	<s:submit>Submit</s:submit>
+	</s:form></div>
+</center>
 </body>
 </html>

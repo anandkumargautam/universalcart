@@ -8,8 +8,10 @@
 <title>SUCCESS</title>
 </head>
 <body>
-	<center>
-		<h2>Success</h2>
-	</center>
+<center>
+<h2>Success</h2>
+</center>
+<script language="JavaScript" src="scripts/jquery-3.1.1.js"></script>
+<script language="JavaScript" src="scripts/test.js"></script>
 </body>
 </html>
