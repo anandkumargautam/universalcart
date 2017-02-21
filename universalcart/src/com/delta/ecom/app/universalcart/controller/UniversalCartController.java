@@ -3,7 +3,9 @@ package com.delta.ecom.app.universalcart.controller;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -12,6 +14,7 @@ import org.hibernate.Transaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,7 @@ import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControlle
 import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Product;
 import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.ProductType;
 import com.delta.ecom.app.universalcart.dto.ProductTypeDTO;
+import com.delta.ecom.app.universalcart.dto.ProductTypes;
 import com.delta.ecom.app.universalcart.dto.ProductsDTO;
 import com.delta.ecom.app.universalcart.exceptions.UniversalCartException;
 import com.delta.ecom.app.universalcart.hibernate.HibernateUtil;
@@ -91,7 +95,7 @@ public class UniversalCartController {
 	 * @return List<ProductTypeDTO>
 	 */
 	@RequestMapping(value = "/producttypes", method = RequestMethod.GET)
-	public List<ProductTypeDTO> list() {
+	public ProductTypes list() {
 		log.debug("/producttypes called");
 
 		Session session = null;
@@ -101,7 +105,10 @@ public class UniversalCartController {
 
 			List<ProductTypeDTO> productTypes = new ProductTypeModel()
 					.retrieveAll(session);
-			return productTypes;
+
+			ProductTypes types = new ProductTypes();
+			types.types = productTypes;
+			return types;
 		} catch (HibernateException hbe) {
 			log.error(hbe.getMessage());
 
@@ -286,6 +293,8 @@ public class UniversalCartController {
 	 * 
 	 * @return List<Product>
 	 */
+	@SuppressWarnings("unchecked")
+	@CrossOrigin
 	@RequestMapping(value = "/viewcart", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Product> viewCart(@RequestParam("email") String email) {
 		log.debug("/viewcart called");
@@ -295,13 +304,24 @@ public class UniversalCartController {
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 
+			// Fetch All Products
 			List<ProductsDTO> productsDTOList = new ProductsModel().getByEmail(
 					session, email);
+
+			// Fetch and create map of product types
+			Map<Integer, String> productTypeMap = new HashedMap();
+			List<ProductTypeDTO> productTypes = new ProductTypeModel()
+					.retrieveAll(session);
+			for (ProductTypeDTO productType : productTypes) {
+				if (null != productType) {
+					productTypeMap.put(productType.id, productType.name);
+				}
+			}
 
 			List<Product> products = new ArrayList<Product>();
 			for (ProductsDTO productsDTO : productsDTOList) {
 				Product product = new Product();
-				product.type = productsDTO.type;
+				product.type = productTypeMap.get(productsDTO.type);
 				product.data = productsDTO.data;
 				products.add(product);
 			}

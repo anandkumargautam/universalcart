@@ -25,7 +25,7 @@ public class UniversalCartControllerHelper {
 	}
 	
 	public static class Product {
-		public int type;
+		public String type;
 		public String data;
 	}
 }
