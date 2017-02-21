@@ -1,20 +1,18 @@
 $(document).ready( function() {
 
-	var reqObj = {
-		"passengerData" : JSON.stringify( {
-			"emailId" : "test@gmail.com"
-		})
-	};
+
+	var reqObj = { "email" : "test@gmail.com" };
+	 
 	$.ajax( {
-		type : 'POST',
+		type : 'GET',
 		data : reqObj,
-		url : "getallitems",
+		dataType: 'application/json; charset=utf-8',
+		url : "http://localhost:8080/viewcart",
 		success : function(data) {
-			// Check if page needs to be redirected
-		if (!!data) {
-			alert("hurrayyyy!!!!!!!!!!!!!!!");
+			if (!!data) {
+				alert("hurrayyyy!!!!!!!!!!!!!!!");
+			}
 		}
-	}
 	});
 
 	$(document).on("click", "#submitBtn", function() {

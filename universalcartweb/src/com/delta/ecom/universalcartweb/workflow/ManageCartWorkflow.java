@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
-import com.delta.ecom.app.universalcart.dto.ProductsDTO;
 import com.delta.ecom.universalcartweb.converter.ManageCartConverter;
 import com.delta.ecom.universalcartweb.dataobject.CartDO;
 import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
 import com.delta.ecom.universalcartweb.delegate.ManageCartDelegate;
+import com.delta.ecom.universalcartweb.dto.ProductsDTO;
 import com.delta.ecom.universalcartweb.exception.ManageCartDelegateException;
 
 public class ManageCartWorkflow {

@@ -1,17 +1,12 @@
 package com.delta.ecom.universalcartweb.delegate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Level;
-import org.hibernate.Session;
 
 import com.delta.commons.util.DeltaLogger;
-import com.delta.ecom.app.universalcart.dto.ProductsDTO;
-import com.delta.ecom.app.universalcart.exceptions.DBException;
-import com.delta.ecom.app.universalcart.hibernate.HibernateUtil;
-import com.delta.ecom.app.universalcart.model.ProductsModel;
 import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
+import com.delta.ecom.universalcartweb.dto.ProductsDTO;
 import com.delta.ecom.universalcartweb.exception.ManageCartDelegateException;
 
 public class ManageCartDelegate {
@@ -32,7 +27,7 @@ public class ManageCartDelegate {
 		if (loggerEnabled) {
 			LOGGER.debug("getAllProductsFromCart called");
 		}
-		Session session = null;
+		/*Session session = null;
 		List<ProductsDTO> products = new ArrayList<ProductsDTO>();
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -42,13 +37,18 @@ public class ManageCartDelegate {
 		} catch (DBException ex) {
 			LOGGER.error("Exception while retrieving data from products", ex);
 			throw new ManageCartDelegateException(ex);
-		} finally {
+		} catch(Exception ex){
+			LOGGER.error("Exception while retrieving data from products !", ex);
+			throw new ManageCartDelegateException(ex);
+		}
+		finally {
 			if (null != session)
 				session.close();
 		}
 		if (loggerEnabled) {
 			LOGGER.debug("getAllProductsFromCart completed");
 		}
-		return products;
+		return products;*/
+		return null;
 	}
 }

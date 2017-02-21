@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
-import com.delta.ecom.app.universalcart.dto.ProductsDTO;
 import com.delta.ecom.universalcartweb.dataobject.CarDO;
 import com.delta.ecom.universalcartweb.dataobject.CartDO;
 import com.delta.ecom.universalcartweb.dataobject.FlightDO;
 import com.delta.ecom.universalcartweb.dataobject.HotelDO;
+import com.delta.ecom.universalcartweb.dto.ProductsDTO;
 
 public class ManageCartConverter {
 
