@@ -7,14 +7,13 @@ $(document).ready( function() {
 		"email" : "test@gmail.com"
 	};
 	$.ajax( {
-		type : 'GET',
+		type : 'POST',
 		data : reqObj,
-		dataType : 'application/json; charset=utf-8',
 		url : "http://10.245.231.50:8080/viewcart",
-		success : function(data) {
-			alert("Data = " + data);
+		success : function(response) {
+			alert("Data = " + response);
 			
-			$.each(data, function() {
+			$.each(response, function() {
 				$('#cartbody').append('<div style="background: #CCCCCC">' + this.data + '</div>');
 			});
 			

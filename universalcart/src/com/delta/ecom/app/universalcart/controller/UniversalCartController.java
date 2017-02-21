@@ -295,7 +295,7 @@ public class UniversalCartController {
 	 */
 	@SuppressWarnings("unchecked")
 	@CrossOrigin
-	@RequestMapping(value = "/viewcart", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(value = "/viewcart", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public List<Product> viewCart(@RequestParam("email") String email) {
 		log.debug("/viewcart called");
 
