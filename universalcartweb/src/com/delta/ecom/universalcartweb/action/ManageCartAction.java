@@ -38,14 +38,15 @@ public class ManageCartAction extends BaseAction {
 			// Add product to cart using service call
 			try {
 				ServiceClient.addProduct(passenger, product);
+				message = new MessageDO("Product Added Successfully.");
 			} catch (IOException e) {
-				e.printStackTrace();
+				message = new MessageDO("Product not added due to some error!");
+				LOGGER.error("Product failed to add due to " + e.getMessage());
 			} catch (JAXBException e) {
-				e.printStackTrace();
+				message = new MessageDO("Product not added due to some error!");
+				LOGGER.error("Product failed to add due to " + e.getMessage());
 			}
 
-			// Send message to client
-			message = new MessageDO("Product Added Successfully.");
 			returnVal = SUCCESS;
 		} else {
 			error = new ErrorDO(UniversalCartConstants.ERROR_INVALID_REQUEST);

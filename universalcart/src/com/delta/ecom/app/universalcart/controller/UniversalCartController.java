@@ -136,8 +136,9 @@ public class UniversalCartController {
 				session = HibernateUtil.getSessionFactory().openSession();
 				// Check if product type exists
 				ProductTypeModel productTypeModel = new ProductTypeModel();
+
 				boolean productTypeExists = productTypeModel.checkExists(
-						session, product.type);
+						session, Integer.parseInt(product.type));
 
 				if (productTypeExists) {
 					// Construct DTO
@@ -155,7 +156,7 @@ public class UniversalCartController {
 					return new ResponseEntity<String>(
 							"Product added successfully", HttpStatus.OK);
 				} else {
-					return new ResponseEntity<String>("",
+					return new ResponseEntity<String>("Invalid Product Type",
 							HttpStatus.BAD_REQUEST);
 				}
 			} catch (HibernateException hbe) {

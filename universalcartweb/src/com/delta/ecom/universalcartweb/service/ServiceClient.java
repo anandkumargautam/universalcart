@@ -131,12 +131,13 @@ public class ServiceClient {
 				while ((inputStr = streamReader.readLine()) != null) {
 					responseStrBuilder.append(inputStr);
 				}
-
+				
 			}
 		} finally {
 			if (null != connection)
 				connection.disconnect();
 		}
+	
 	}
 
 	/**

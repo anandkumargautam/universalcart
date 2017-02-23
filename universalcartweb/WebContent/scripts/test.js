@@ -6,17 +6,26 @@ $(document).ready( function() {
 	var reqObj = {
 		"email" : "test@gmail.com"
 	};
+	
 	$.ajax( {
 		type : 'POST',
 		data : reqObj,
 		url : "http://10.245.231.50:8080/viewcart",
 		success : function(response) {
-			alert("Data = " + response);
-			
+		
 			$.each(response, function() {
-				$('#cartbody').append('<div style="background: #CCCCCC">' + this.data + '</div>');
+				var divbody = '';
+				if(this.type == 'flight'){
+					divbody = '<p>' + this.id + ' : FLIGHT </p>';
+				}
+				else if(this.type == 'hotel'){
+					divbody = '<p>' + this.id + ' : HOTEL </p>';				
+				}
+				else if(this.type == 'car'){
+					divbody = '<p>' + this.id + ' : CAR </p>';
+				}
+				$('#cartbody').append(divbody);
 			});
-			
 		}
 	});
 

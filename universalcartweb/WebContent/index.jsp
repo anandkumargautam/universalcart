@@ -24,7 +24,8 @@
 	<s:select label="Product Type" name="product.type" headerKey="-1"
 		headerValue="Select Product Type"
 		list="#{'flight':'FLIGHT', 'hotel':'HOTEL', 'car':'CAR'}" value="type"
-		required="true" />
+		required="true" 
+		id="producttype"/>
 
 
 
