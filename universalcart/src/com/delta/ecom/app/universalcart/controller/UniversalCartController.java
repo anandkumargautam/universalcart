@@ -21,11 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Car;
-import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Flight;
-import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Hotel;
-import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Product;
 import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.ProductType;
+import com.delta.ecom.app.universalcart.dto.Product;
 import com.delta.ecom.app.universalcart.dto.ProductTypeDTO;
 import com.delta.ecom.app.universalcart.dto.ProductTypes;
 import com.delta.ecom.app.universalcart.dto.ProductsDTO;
@@ -123,72 +120,16 @@ public class UniversalCartController {
 	}
 
 	/**
-	 * Rest call to add flight to cart
-	 * 
-	 * @param flight
-	 * @return ResponseEntity<String>
-	 */
-	@RequestMapping(value = "/flight/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> addFlight(@RequestBody Flight flight) {
-		log.debug("/flight/add called");
-
-		if (null != flight && null != flight.shopInputDO) {
-			Session session = null;
-			Transaction tx = null;
-			try {
-				session = HibernateUtil.getSessionFactory().openSession();
-
-				// Check if product type exists
-				ProductTypeModel productTypeModel = new ProductTypeModel();
-				boolean productTypeExists = productTypeModel.checkExists(
-						session, flight.type);
-
-				if (productTypeExists) {
-					// Construct DTO
-					ProductsDTO productDTO = new ProductsDTO();
-					productDTO.data = flight.shopInputDO;
-					productDTO.email = flight.email;
-					productDTO.type = flight.type;
-					productDTO.entryTimestamp = new Timestamp(System
-							.currentTimeMillis());
-
-					tx = session.beginTransaction();
-					new ProductsModel().save(session, productDTO);
-					tx.commit();
-
-					return new ResponseEntity<String>(
-							"Product Type: Flight inserted successfully",
-							HttpStatus.OK);
-				} else {
-					return new ResponseEntity<String>(
-							"Product Type doesnot exist",
-							HttpStatus.BAD_REQUEST);
-				}
-			} catch (HibernateException hbe) {
-				log.error(hbe.getMessage());
-
-				if (null != tx)
-					tx.rollback();
-
-			} finally {
-				if (null != session)
-					session.close();
-			}
-		}
-		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-	}
-
-	/**
 	 * Rest call to add car to cart
 	 * 
 	 * @param flight
 	 * @return ResponseEntity<String>
 	 */
-	@RequestMapping(value = "/car/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> addCar(@RequestBody Car car) {
-		log.debug("/car/add called");
+	@RequestMapping(value = { "/flight/add", "/hotel/add", "/car/add" }, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> addCar(@RequestBody Product product) {
+		log.debug("/{product}/add called");
 
-		if (null != car && null != car.carDO) {
+		if (null != product && null != product.data) {
 			Session session = null;
 			Transaction tx = null;
 			try {
@@ -196,14 +137,14 @@ public class UniversalCartController {
 				// Check if product type exists
 				ProductTypeModel productTypeModel = new ProductTypeModel();
 				boolean productTypeExists = productTypeModel.checkExists(
-						session, car.type);
+						session, product.type);
 
 				if (productTypeExists) {
 					// Construct DTO
 					ProductsDTO productDTO = new ProductsDTO();
-					productDTO.data = car.carDO;
-					productDTO.email = car.email;
-					productDTO.type = car.type;
+					productDTO.data = product.data;
+					productDTO.email = product.email;
+					productDTO.type = Integer.parseInt(product.type);
 					productDTO.entryTimestamp = new Timestamp(System
 							.currentTimeMillis());
 
@@ -212,66 +153,9 @@ public class UniversalCartController {
 					tx.commit();
 
 					return new ResponseEntity<String>(
-							"Product Type: Car inserted successfully",
-							HttpStatus.OK);
+							"Product added successfully", HttpStatus.OK);
 				} else {
-					return new ResponseEntity<String>(
-							"Product Type doesnot exist",
-							HttpStatus.BAD_REQUEST);
-				}
-			} catch (HibernateException hbe) {
-				log.error(hbe.getMessage());
-
-				if (null != tx)
-					tx.rollback();
-
-			} finally {
-				if (null != session)
-					session.close();
-			}
-		}
-		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-	}
-
-	/**
-	 * Rest call to add hotel to cart
-	 * 
-	 * @param flight
-	 * @return ResponseEntity<String>
-	 */
-	@RequestMapping(value = "/hotel/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<String> addHotel(@RequestBody Hotel hotel) {
-		log.debug("/hotel/add called");
-
-		if (null != hotel && null != hotel.hotelDO) {
-			Session session = null;
-			Transaction tx = null;
-			try {
-				session = HibernateUtil.getSessionFactory().openSession();
-				// Check if product type exists
-				ProductTypeModel productTypeModel = new ProductTypeModel();
-				boolean productTypeExists = productTypeModel.checkExists(
-						session, hotel.type);
-
-				if (productTypeExists) {
-					// Construct DTO
-					ProductsDTO productDTO = new ProductsDTO();
-					productDTO.data = hotel.hotelDO;
-					productDTO.email = hotel.email;
-					productDTO.type = hotel.type;
-					productDTO.entryTimestamp = new Timestamp(System
-							.currentTimeMillis());
-
-					tx = session.beginTransaction();
-					new ProductsModel().save(session, productDTO);
-					tx.commit();
-
-					return new ResponseEntity<String>(
-							"Product Type: Hotel inserted successfully",
-							HttpStatus.OK);
-				} else {
-					return new ResponseEntity<String>(
-							"Product Type doesnot exist",
+					return new ResponseEntity<String>("",
 							HttpStatus.BAD_REQUEST);
 				}
 			} catch (HibernateException hbe) {
@@ -323,6 +207,7 @@ public class UniversalCartController {
 				Product product = new Product();
 				product.type = productTypeMap.get(productsDTO.type);
 				product.data = productsDTO.data;
+				product.id = String.valueOf(productsDTO.id);
 				products.add(product);
 			}
 			return products;

@@ -1,12 +1,19 @@
 package com.delta.ecom.universalcartweb.action;
 
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
 import com.delta.commons.util.StringUtils;
 import com.delta.ecom.universalcartweb.constant.UniversalCartConstants;
 import com.delta.ecom.universalcartweb.dataobject.ErrorDO;
+import com.delta.ecom.universalcartweb.dataobject.MessageDO;
 import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
+import com.delta.ecom.universalcartweb.dataobject.ProductDO;
+import com.delta.ecom.universalcartweb.service.ServiceClient;
 
 public class ManageCartAction extends BaseAction {
 
@@ -17,15 +24,28 @@ public class ManageCartAction extends BaseAction {
 			.isEnabledFor(Level.DEBUG);
 
 	private PassengerDO passenger;
+	private ProductDO product;
 
-	public String execute() {
+	public String addToCart() {
 		String returnVal;
 		if (loggerEnabled) {
-			LOGGER.debug("ManageCartAction called");
+			LOGGER.debug("ManageCartAction.addToCart called");
 		}
 		// Validate Passenger's email
 		if (null != passenger && null != passenger.emailId
-				&& StringUtils.isNotEmpty(passenger.emailId)) {
+				&& StringUtils.isNotEmpty(passenger.emailId) && null != product) {
+
+			// Add product to cart using service call
+			try {
+				ServiceClient.addProduct(passenger, product);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JAXBException e) {
+				e.printStackTrace();
+			}
+
+			// Send message to client
+			message = new MessageDO("Product Added Successfully.");
 			returnVal = SUCCESS;
 		} else {
 			error = new ErrorDO(UniversalCartConstants.ERROR_INVALID_REQUEST);
@@ -33,10 +53,19 @@ public class ManageCartAction extends BaseAction {
 			returnVal = ERROR;
 		}
 		if (loggerEnabled) {
-			LOGGER.debug("ManageCartAction completed with return value : "
-					+ returnVal);
+			LOGGER
+					.debug("ManageCartAction.addToCart completed with return value : "
+							+ returnVal);
 		}
 		return returnVal;
+	}
+
+	public String manageCart() {
+		if (loggerEnabled) {
+			LOGGER.debug("ManageCartAction.manageCart called");
+		}
+
+		return SUCCESS;
 	}
 
 	public void setPassenger(PassengerDO passenger) {
@@ -45,5 +74,21 @@ public class ManageCartAction extends BaseAction {
 
 	public PassengerDO getPassenger() {
 		return passenger;
+	}
+
+	public void setProduct(ProductDO product) {
+		this.product = product;
+	}
+
+	public ProductDO getProduct() {
+		return product;
+	}
+
+	public MessageDO getMessage() {
+		return message;
+	}
+
+	public void setMessage(MessageDO message) {
+		this.message = message;
 	}
 }

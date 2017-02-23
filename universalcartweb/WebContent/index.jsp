@@ -16,10 +16,32 @@
 <br>
 <hr>
 
-<div><s:form action="managecart">
-	<s:textfield name="passenger.emailId" size="20"></s:textfield>
-	<s:submit>Submit</s:submit>
-	</s:form></div>
-</center>
+<div><s:form action="addtocart">
+	<s:textfield name="passenger.emailId" size="20" label="Email" required="true"/>
+
+
+	<br>
+	<s:select label="Product Type" name="product.type" headerKey="-1"
+		headerValue="Select Product Type"
+		list="#{'flight':'FLIGHT', 'hotel':'HOTEL', 'car':'CAR'}" value="type"
+		required="true" />
+
+
+
+
+	<s:textarea rows="10" cols="70" name="product.data" id="productxml" />
+
+	<s:submit value="Add To Cart"></s:submit>
+</s:form> <br>
+</div>
+
+
+<br>
+<s:property value="message.message" /> <br>
+<s:form action="managecart">
+	<s:submit value="View Cart"></s:submit>
+</s:form></center>
+<script language="JavaScript" src="scripts/jquery-3.1.1.js"></script>
+<script language="JavaScript" src="scripts/index.js"></script>
 </body>
 </html>

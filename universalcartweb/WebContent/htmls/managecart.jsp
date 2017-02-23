@@ -11,13 +11,10 @@
 <center>
 <h2>Manage Cart</h2>
 <hr>
-<div id="cartbody">
-	
-
-</div>
+<div id="cartbody"></div>
 
 </center>
-<script language="JavaScript" src="scripts/jquery-3.1.1.js"></script>
-<script language="JavaScript" src="scripts/test.js"></script>
+<script language="JavaScript" src="./scripts/jquery-3.1.1.js"></script>
+<script language="JavaScript" src="./scripts/test.js"></script>
 </body>
 </html>
