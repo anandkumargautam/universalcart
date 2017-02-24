@@ -37,22 +37,22 @@ public class ManageCartConverter {
 				// Hotel
 				if (product.type.equalsIgnoreCase("hotel")) {
 					HotelDO hotelDO = new HotelDO();
-					hotelDO.id = String.valueOf(product.id);
-					hotelDO.hotelName = "Gordon Ramsay's BBQ";
+					hotelDO.setId(String.valueOf(product.id));
+					hotelDO.setHotelName("Gordon Ramsay's BBQ");
 					cartDO.getHotels().add(hotelDO);
 				}
 				// Car
 				if (product.type.equalsIgnoreCase("car")) {
 					CarDO carDO = new CarDO();
-					carDO.id = String.valueOf(product.id);
-					carDO.carName = "Alexa";
+					carDO.setId(String.valueOf(product.id));
+					carDO.setCarName("Alexa");
 					cartDO.getCars().add(carDO);
 				}
 				// Flight
 				if (product.type.equalsIgnoreCase("flight")) {
 					FlightDO flightDO = new FlightDO();
-					flightDO.id = String.valueOf(product.id);
-					flightDO.flightNum = "1234";
+					flightDO.setId(String.valueOf(product.id));
+					flightDO.setFlightNum("1234");
 					cartDO.getFlights().add(flightDO);
 				}
 
