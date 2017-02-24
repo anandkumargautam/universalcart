@@ -17,7 +17,7 @@
 <hr>
 
 <div><s:form action="addtocart">
-	<s:textfield name="passenger.emailId" size="20" label="Email" required="true"/>
+	<s:textfield name="passenger.emailId" size="20" label="Email" required="true" id="email"/>
 
 
 	<br>
@@ -39,9 +39,8 @@
 
 <br>
 <s:property value="message.message" /> <br>
-<s:form action="managecart">
-	<s:submit value="View Cart"></s:submit>
-</s:form></center>
+
+<button id="viewcart" value="View Cart">View Cart</button>
 <script language="JavaScript" src="scripts/jquery-3.1.1.js"></script>
 <script language="JavaScript" src="scripts/index.js"></script>
 </body>

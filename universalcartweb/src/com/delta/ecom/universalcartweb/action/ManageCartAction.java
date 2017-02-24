@@ -1,12 +1,15 @@
 package com.delta.ecom.universalcartweb.action;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
+import com.delta.commons.util.ObjectUtil;
 import com.delta.commons.util.StringUtils;
 import com.delta.ecom.universalcartweb.constant.UniversalCartConstants;
 import com.delta.ecom.universalcartweb.dataobject.ErrorDO;
@@ -14,6 +17,8 @@ import com.delta.ecom.universalcartweb.dataobject.MessageDO;
 import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
 import com.delta.ecom.universalcartweb.dataobject.ProductDO;
 import com.delta.ecom.universalcartweb.service.ServiceClient;
+import com.google.gson.reflect.TypeToken;
+import com.opensymphony.xwork2.ActionContext;
 
 public class ManageCartAction extends BaseAction {
 
@@ -24,13 +29,21 @@ public class ManageCartAction extends BaseAction {
 			.isEnabledFor(Level.DEBUG);
 
 	private PassengerDO passenger;
+	private String passengerData;
 	private ProductDO product;
 
 	public String addToCart() {
 		String returnVal;
+
 		if (loggerEnabled) {
 			LOGGER.debug("ManageCartAction.addToCart called");
 		}
+
+		/*Type collectionType = new TypeToken<PassengerDO>() {
+		}.getType();
+		passenger = (PassengerDO) ObjectUtil.deSerializeObjFromJSON(
+				getPassengerData(), collectionType);*/
+
 		// Validate Passenger's email
 		if (null != passenger && null != passenger.emailId
 				&& StringUtils.isNotEmpty(passenger.emailId) && null != product) {
@@ -65,7 +78,13 @@ public class ManageCartAction extends BaseAction {
 		if (loggerEnabled) {
 			LOGGER.debug("ManageCartAction.manageCart called");
 		}
+		Type collectionType = new TypeToken<PassengerDO>() {
+		}.getType();
+		passenger = (PassengerDO) ObjectUtil.deSerializeObjFromJSON(
+				getPassengerData(), collectionType);
 
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.put("email", getPassenger().emailId);
 		return SUCCESS;
 	}
 
@@ -91,5 +110,13 @@ public class ManageCartAction extends BaseAction {
 
 	public void setMessage(MessageDO message) {
 		this.message = message;
+	}
+
+	public void setPassengerData(String passengerData) {
+		this.passengerData = passengerData;
+	}
+
+	public String getPassengerData() {
+		return passengerData;
 	}
 }

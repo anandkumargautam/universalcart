@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.ProductType;
+import com.delta.ecom.app.universalcart.controller.helper.UniversalCartControllerHelper.Products;
 import com.delta.ecom.app.universalcart.dto.Product;
 import com.delta.ecom.app.universalcart.dto.ProductTypeDTO;
 import com.delta.ecom.app.universalcart.dto.ProductTypes;
@@ -181,7 +182,7 @@ public class UniversalCartController {
 	@SuppressWarnings("unchecked")
 	@CrossOrigin
 	@RequestMapping(value = "/viewcart", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public List<Product> viewCart(@RequestParam("email") String email) {
+	public Products viewCart(@RequestParam("email") String email) {
 		log.debug("/viewcart called");
 
 		Session session = null;
@@ -202,15 +203,16 @@ public class UniversalCartController {
 					productTypeMap.put(productType.id, productType.name);
 				}
 			}
-
-			List<Product> products = new ArrayList<Product>();
+			Products products = new Products();
+			List<Product> productsList = new ArrayList<Product>();
 			for (ProductsDTO productsDTO : productsDTOList) {
 				Product product = new Product();
 				product.type = productTypeMap.get(productsDTO.type);
 				product.data = productsDTO.data;
 				product.id = String.valueOf(productsDTO.id);
-				products.add(product);
+				productsList.add(product);
 			}
+			products.products = productsList;
 			return products;
 		} catch (HibernateException hbe) {
 			log.error(hbe.getMessage());

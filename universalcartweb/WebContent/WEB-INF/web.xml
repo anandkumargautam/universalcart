@@ -13,4 +13,16 @@
 		<filter-name>struts2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<servlet>
+		<servlet-name>universalcart-health</servlet-name>
+		<servlet-class>com.delta.ecom.universalcartweb.servlet.UniversalCartHealthServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>universalcart-health</servlet-name>
+		<url-pattern>/universalcart-health</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>

@@ -1,19 +1,17 @@
 package com.delta.ecom.universalcartweb.action;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
-import com.delta.commons.util.ObjectUtil;
 import com.delta.commons.util.StringUtils;
-import com.delta.ecom.universalcartweb.constant.UniversalCartConstants;
 import com.delta.ecom.universalcartweb.dataobject.CartDO;
-import com.delta.ecom.universalcartweb.dataobject.ErrorDO;
-import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
-import com.delta.ecom.universalcartweb.exception.ManageCartDelegateException;
-import com.delta.ecom.universalcartweb.workflow.ManageCartWorkflow;
-import com.google.gson.reflect.TypeToken;
+import com.delta.ecom.universalcartweb.service.ServiceClient;
+import com.opensymphony.xwork2.ActionContext;
 
 public class ManageCartJSONAction extends BaseAction {
 
@@ -23,44 +21,39 @@ public class ManageCartJSONAction extends BaseAction {
 	private static final boolean loggerEnabled = LOGGER
 			.isEnabledFor(Level.DEBUG);
 
-	private PassengerDO passenger;
-	private String passengerData;
 	private CartDO cart;
 
 	public String getAllItems() {
 		if (loggerEnabled) {
 			LOGGER.debug("ManageCartJSONAction called");
 		}
-
+		String email = null;
 		// Validate Passenger's email
-		if (null != passengerData && StringUtils.isNotEmpty(passengerData)) {
+		try {
 
-			try {
-
-				// Convert String to Data Object
-				Type collectionType = new TypeToken<PassengerDO>() {
-				}.getType();
-				passenger = (PassengerDO) ObjectUtil.deSerializeObjFromJSON(
-						getPassengerData(), collectionType);
-
-				if (null != passenger && null != passenger.emailId
-						&& StringUtils.isNotEmpty(passenger.emailId)) {
-					// Get Cart Items
-					setCart(ManageCartWorkflow.getAllProducts(passenger));
-
-				} else {
-					LOGGER.error("Unable to cast json string to object");
-				}
-
-			} catch (ManageCartDelegateException e) {
-				LOGGER.error(e.getMessage());
-				error = new ErrorDO(UniversalCartConstants.ERROR_DATABASE_ERROR);
+			// Convert String to Data Object
+			Map<String, Object> session = ActionContext.getContext()
+					.getSession();
+			if (session.containsKey("email")) {
+				email = (String) session.get("email");
 			}
 
-		} else {
-			error = new ErrorDO(UniversalCartConstants.ERROR_INVALID_REQUEST);
-			LOGGER.error("Invalid Request");
+			if (null != email && StringUtils.isNotEmpty(email)) {
+				// Get Cart Items
+				setCart(ServiceClient.getAllProductsFrmCart(email));
+
+			} else {
+				LOGGER.error("Unable to cast json string to object");
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 		if (loggerEnabled) {
 			LOGGER.debug("ManageCartJSONAction completed");
 		}
@@ -73,21 +66,5 @@ public class ManageCartJSONAction extends BaseAction {
 
 	public CartDO getCart() {
 		return cart;
-	}
-
-	public void setPassenger(PassengerDO passenger) {
-		this.passenger = passenger;
-	}
-
-	public PassengerDO getPassenger() {
-		return passenger;
-	}
-
-	public void setPassengerData(String passengerData) {
-		this.passengerData = passengerData;
-	}
-
-	public String getPassengerData() {
-		return passengerData;
 	}
 }

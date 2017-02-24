@@ -7,4 +7,6 @@ public class UniversalCartConstants {
 	public static final String FLIGHT = "flight";
 	public static final String HOTEL = "hotel";
 	public static final String CAR = "car";
+	
+	public static final String REST_SERVER_URL = "REST_SERVER_URL";
 }

@@ -1,7 +1,5 @@
 package com.delta.ecom.universalcartweb.converter;
 
-import java.util.List;
-
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
@@ -9,7 +7,8 @@ import com.delta.ecom.universalcartweb.dataobject.CarDO;
 import com.delta.ecom.universalcartweb.dataobject.CartDO;
 import com.delta.ecom.universalcartweb.dataobject.FlightDO;
 import com.delta.ecom.universalcartweb.dataobject.HotelDO;
-import com.delta.ecom.universalcartweb.dto.ProductsDTO;
+import com.delta.ecom.universalcartweb.service.ServiceClientHelper.Product;
+import com.delta.ecom.universalcartweb.service.ServiceClientHelper.Products;
 
 public class ManageCartConverter {
 
@@ -24,37 +23,37 @@ public class ManageCartConverter {
 	 * @param products
 	 * @return List<CartDO>
 	 */
-	public static CartDO convertProductsToCart(List<ProductsDTO> products) {
+	public static CartDO convertProductsToCart(Products products) {
 		if (loggerEnabled) {
 			LOGGER.debug("convertProductsToCart called");
 		}
 
 		CartDO cartDO = new CartDO();
 
-		if (null != products && !products.isEmpty()) {
+		if (null != products && !products.products.isEmpty()) {
 
-			for (ProductsDTO product : products) {
+			for (Product product : products.products) {
 
 				// Hotel
-				if (product.type == 8) {
+				if (product.type.equalsIgnoreCase("hotel")) {
 					HotelDO hotelDO = new HotelDO();
 					hotelDO.id = String.valueOf(product.id);
 					hotelDO.hotelName = "Gordon Ramsay's BBQ";
-					cartDO.hotels.add(hotelDO);
+					cartDO.getHotels().add(hotelDO);
 				}
 				// Car
-				if (product.type == 7) {
+				if (product.type.equalsIgnoreCase("car")) {
 					CarDO carDO = new CarDO();
 					carDO.id = String.valueOf(product.id);
 					carDO.carName = "Alexa";
-					cartDO.cars.add(carDO);
+					cartDO.getCars().add(carDO);
 				}
 				// Flight
-				if (product.type == 6) {
+				if (product.type.equalsIgnoreCase("flight")) {
 					FlightDO flightDO = new FlightDO();
 					flightDO.id = String.valueOf(product.id);
 					flightDO.flightNum = "1234";
-					cartDO.flights.add(flightDO);
+					cartDO.getFlights().add(flightDO);
 				}
 
 			}

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
-import com.delta.ecom.universalcartweb.dataobject.PassengerDO;
 import com.delta.ecom.universalcartweb.dto.ProductsDTO;
 import com.delta.ecom.universalcartweb.exception.ManageCartDelegateException;
 
@@ -22,7 +21,7 @@ public class ManageCartDelegate {
 	 * @return List<ProductsDTO>
 	 * @throws ManageCartDelegateException
 	 */
-	public List<ProductsDTO> getAllProductsFromCart(PassengerDO passenger)
+	public List<ProductsDTO> getAllProductsFromCart(String email)
 			throws ManageCartDelegateException {
 		if (loggerEnabled) {
 			LOGGER.debug("getAllProductsFromCart called");

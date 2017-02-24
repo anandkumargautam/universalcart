@@ -2,16 +2,26 @@ $(document)
 		.ready(
 				function() {
 
-					/*
-					 * $(document).on("click", "#managecart", function() { var
-					 * reqObj = { "passengerData" : JSON.stringify( { "emailId" :
-					 * "test@gmail.com" }) }; $.ajax( { type : 'POST', data :
-					 * reqObj, url : "getallitems", success : function(data) { //
-					 * Check if page needs to be redirected
-					 * 
-					 * if (!!data) { alert("hurrayyyy!!!!!!!!!!!!!!!"); } } });
-					 * });
-					 */
+					$(document).on("click", "#viewcart", function() {
+
+						var reqObj = {
+							"passengerData" : JSON.stringify( {
+								"emailId" : $("#email").val()
+							})
+						};
+
+						$.ajax( {
+							type : 'POST',
+							data : reqObj,
+							url : "managecart",
+							success : function(response) {
+
+								if (!!response) {
+									window.location.href = "./htmls/managecart.jsp";
+								}
+							}
+						});
+					});
 
 					$(document)
 							.on(
