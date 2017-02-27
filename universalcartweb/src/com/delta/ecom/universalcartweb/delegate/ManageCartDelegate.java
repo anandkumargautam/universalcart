@@ -21,7 +21,7 @@ public class ManageCartDelegate {
 	 * @return List<ProductsDTO>
 	 * @throws ManageCartDelegateException
 	 */
-	public List<ProductsDTO> getAllProductsFromCart(String email)
+	public List<ProductsDTO> getAllProductsFromCart(String skymileNumber)
 			throws ManageCartDelegateException {
 		if (loggerEnabled) {
 			LOGGER.debug("getAllProductsFromCart called");

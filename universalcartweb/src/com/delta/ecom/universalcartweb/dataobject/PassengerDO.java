@@ -1,5 +1,5 @@
 package com.delta.ecom.universalcartweb.dataobject;
 
 public class PassengerDO {
-	public String emailId;
+	public String skymileNumber;
 }

@@ -6,7 +6,7 @@ $(document)
 
 						var reqObj = {
 							"passengerData" : JSON.stringify( {
-								"emailId" : $("#email").val()
+								"skymileNumber" : $("#skymilenumber").val()
 							})
 						};
 

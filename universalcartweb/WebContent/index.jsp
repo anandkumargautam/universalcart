@@ -17,7 +17,7 @@
 <hr>
 
 <div><s:form action="addtocart">
-	<s:textfield name="passenger.emailId" size="20" label="Email" required="true" id="email"/>
+	<s:textfield name="passenger.skymileNumber" size="20" label="Skymile Number" required="true" id="skymilenumber"/>
 
 
 	<br>

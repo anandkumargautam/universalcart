@@ -24,8 +24,8 @@ public class ProductsEntity {
 	@Column(name = "data", nullable = false)
 	private String data;
 
-	@Column(name = "email", nullable = false)
-	private String email;
+	@Column(name = "skymilenumber", nullable = false)
+	private long skymileNumber;
 
 	@Column(name = "entrytimestamp", nullable = false)
 	private Timestamp entryTimestamp;
@@ -54,20 +54,20 @@ public class ProductsEntity {
 		this.data = data;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
 	public void setEntryTimestamp(Timestamp entryTimestamp) {
 		this.entryTimestamp = entryTimestamp;
 	}
 
 	public Timestamp getEntryTimestamp() {
 		return entryTimestamp;
+	}
+
+	public void setSkymileNumber(long skymileNumber) {
+		this.skymileNumber = skymileNumber;
+	}
+
+	public long getSkymileNumber() {
+		return skymileNumber;
 	}
 
 }

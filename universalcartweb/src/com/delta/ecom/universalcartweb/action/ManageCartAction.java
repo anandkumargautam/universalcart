@@ -44,9 +44,9 @@ public class ManageCartAction extends BaseAction {
 		passenger = (PassengerDO) ObjectUtil.deSerializeObjFromJSON(
 				getPassengerData(), collectionType);*/
 
-		// Validate Passenger's email
-		if (null != passenger && null != passenger.emailId
-				&& StringUtils.isNotEmpty(passenger.emailId) && null != product) {
+		// Validate Passenger's skymile
+		if (null != passenger && null != passenger.skymileNumber
+				&& StringUtils.isNotEmpty(passenger.skymileNumber) && null != product) {
 
 			// Add product to cart using service call
 			try {
@@ -84,7 +84,7 @@ public class ManageCartAction extends BaseAction {
 				getPassengerData(), collectionType);
 
 		Map<String, Object> session = ActionContext.getContext().getSession();
-		session.put("email", getPassenger().emailId);
+		session.put("skymileNumber", getPassenger().skymileNumber);
 		return SUCCESS;
 	}
 

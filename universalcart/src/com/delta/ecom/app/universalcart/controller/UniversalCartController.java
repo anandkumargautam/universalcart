@@ -145,7 +145,8 @@ public class UniversalCartController {
 					// Construct DTO
 					ProductsDTO productDTO = new ProductsDTO();
 					productDTO.data = product.data;
-					productDTO.email = product.email;
+					productDTO.skymileNumber = Long
+							.parseLong(product.skymileNumber);
 					productDTO.type = Integer.parseInt(product.type);
 					productDTO.entryTimestamp = new Timestamp(System
 							.currentTimeMillis());
@@ -175,14 +176,14 @@ public class UniversalCartController {
 	}
 
 	/**
-	 * Rest call to retrieve all products using email id
+	 * Rest call to retrieve all products using skymile number
 	 * 
 	 * @return List<Product>
 	 */
 	@SuppressWarnings("unchecked")
 	@CrossOrigin
 	@RequestMapping(value = "/viewcart", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public Products viewCart(@RequestParam("email") String email) {
+	public Products viewCart(@RequestParam("skymileNumber") String skymileNumber) {
 		log.debug("/viewcart called");
 
 		Session session = null;
@@ -191,8 +192,8 @@ public class UniversalCartController {
 			session = HibernateUtil.getSessionFactory().openSession();
 
 			// Fetch All Products
-			List<ProductsDTO> productsDTOList = new ProductsModel().getByEmail(
-					session, email);
+			List<ProductsDTO> productsDTOList = new ProductsModel().getBySkymileNumber(
+					session, skymileNumber);
 
 			// Fetch and create map of product types
 			Map<Integer, String> productTypeMap = new HashedMap();

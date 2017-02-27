@@ -15,7 +15,7 @@ public class ProductsModel extends GenericModel<ProductsEntity, ProductsDTO> {
 		dto.data = entity.getData();
 		dto.id = entity.getId();
 		dto.type = entity.getType();
-		dto.email = entity.getEmail();
+		dto.skymileNumber = entity.getSkymileNumber();
 		dto.entryTimestamp = entity.getEntryTimestamp();
 		return dto;
 	}
@@ -26,7 +26,7 @@ public class ProductsModel extends GenericModel<ProductsEntity, ProductsDTO> {
 		entity.setData(dto.data);
 		entity.setId(dto.id);
 		entity.setType(dto.type);
-		entity.setEmail(dto.email);
+		entity.setSkymileNumber(dto.skymileNumber);
 		entity.setEntryTimestamp(dto.entryTimestamp);
 		return entity;
 	}
@@ -36,17 +36,19 @@ public class ProductsModel extends GenericModel<ProductsEntity, ProductsDTO> {
 	}
 
 	/**
-	 * Select all items using email id
+	 * Select all items using skymile number
+	 * 
 	 * @param session
-	 * @param email
+	 * @param skymiles
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ProductsDTO> getByEmail(Session session, String email) {
-		String query = "SELECT * FROM products WHERE email = :email";
+	public List<ProductsDTO> getBySkymileNumber(Session session, String skymileNumber) {
+		String query = "SELECT * FROM products WHERE skymilenumber = :skymileNumber";
 
 		List<ProductsEntity> row = session.createSQLQuery(query).addEntity(
-				ProductsEntity.class).setParameter("email", email).list();
+				ProductsEntity.class).setParameter("skymileNumber",
+				skymileNumber).list();
 
 		List<ProductsDTO> productsDTOList = new ArrayList<ProductsDTO>();
 		if (null != row && !row.isEmpty()) {

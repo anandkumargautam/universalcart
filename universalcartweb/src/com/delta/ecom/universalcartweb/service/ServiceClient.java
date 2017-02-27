@@ -118,7 +118,7 @@ public class ServiceClient {
 				connection.setDoInput(true);
 
 				JsonObject obj = new JsonObject();
-				obj.addProperty("email", passenger.emailId);
+				obj.addProperty("skymileNumber", passenger.skymileNumber);
 				obj.addProperty("type", String.valueOf(getType(product.type)));
 				obj.addProperty("data", product.data);
 
@@ -154,15 +154,15 @@ public class ServiceClient {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	public static CartDO getAllProductsFrmCart(String email)
+	public static CartDO getAllProductsFrmCart(String skymileNumber)
 			throws IOException, JAXBException {
 		URL url = null;
 		HttpURLConnection connection = null;
 		CartDO cartDO = new CartDO();
 		try {
-			if (null != email && !StringUtils.isEmpty(email)) {
-				url = new URL("http://10.245.231.50:8080/viewcart?email="
-						+ email);
+			if (null != skymileNumber && !StringUtils.isEmpty(skymileNumber)) {
+				url = new URL("http://10.245.231.50:8080/viewcart?skymileNumber="
+						+ skymileNumber);
 				connection = (HttpURLConnection) url.openConnection();
 				if (null != connection) {
 					connection.setRequestMethod("POST");

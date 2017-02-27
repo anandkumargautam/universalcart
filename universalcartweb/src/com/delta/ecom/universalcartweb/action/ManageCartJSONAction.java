@@ -27,20 +27,20 @@ public class ManageCartJSONAction extends BaseAction {
 		if (loggerEnabled) {
 			LOGGER.debug("ManageCartJSONAction called");
 		}
-		String email = null;
-		// Validate Passenger's email
+		String skymileNumber = null;
+		// Validate Passenger's skymile
 		try {
 
 			// Convert String to Data Object
 			Map<String, Object> session = ActionContext.getContext()
 					.getSession();
-			if (session.containsKey("email")) {
-				email = (String) session.get("email");
+			if (session.containsKey("skymileNumber")) {
+				skymileNumber = (String) session.get("skymileNumber");
 			}
 
-			if (null != email && StringUtils.isNotEmpty(email)) {
+			if (null != skymileNumber && StringUtils.isNotEmpty(skymileNumber)) {
 				// Get Cart Items
-				setCart(ServiceClient.getAllProductsFrmCart(email));
+				setCart(ServiceClient.getAllProductsFrmCart(skymileNumber));
 
 			} else {
 				LOGGER.error("Unable to cast json string to object");

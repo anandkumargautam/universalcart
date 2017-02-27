@@ -6,6 +6,6 @@ public class ProductsDTO {
 	public long id;
 	public int type;
 	public String data;
-	public String email;
+	public long skymileNumber;
 	public Timestamp entryTimestamp;
 }

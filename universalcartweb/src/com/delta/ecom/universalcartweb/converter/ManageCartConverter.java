@@ -1,8 +1,12 @@
 package com.delta.ecom.universalcartweb.converter;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.log4j.Level;
 
 import com.delta.commons.util.DeltaLogger;
+import com.delta.commons.util.jaxb.JaxBWrapper;
+import com.delta.ecom.data.flight.ShopInputDO;
 import com.delta.ecom.universalcartweb.dataobject.CarDO;
 import com.delta.ecom.universalcartweb.dataobject.CartDO;
 import com.delta.ecom.universalcartweb.dataobject.FlightDO;
@@ -52,7 +56,9 @@ public class ManageCartConverter {
 				if (product.type.equalsIgnoreCase("flight")) {
 					FlightDO flightDO = new FlightDO();
 					flightDO.setId(String.valueOf(product.id));
+
 					flightDO.setFlightNum("1234");
+					flightDO.setShopInputDO(getShopInputDO(product.data));
 					cartDO.getFlights().add(flightDO);
 				}
 
@@ -63,5 +69,17 @@ public class ManageCartConverter {
 			LOGGER.debug("convertProductsToCart completed");
 		}
 		return cartDO;
+	}
+
+	private static ShopInputDO getShopInputDO(String data) {
+		ShopInputDO shopInputDO = new ShopInputDO();
+		JaxBWrapper wrapper = new JaxBWrapper(ShopInputDO.class);
+		try {
+			shopInputDO = wrapper.unmarshallXML(data);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+			LOGGER.error("Unable to unmarshal ShopInputDO");
+		}
+		return shopInputDO;
 	}
 }
